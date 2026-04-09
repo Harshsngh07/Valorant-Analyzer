@@ -1,5 +1,5 @@
 import { getAccountInfo, getLastMatches } from "@/lib/henrikdev";
-import { analyzePlaystyle } from "@/lib/gemini";
+import { analyzePlaystyleGroq as analyzePlaystyle } from "@/lib/groq";
 import { hardRefresh } from "./actions";
 import { RefreshCw, Sparkles, Activity } from "lucide-react";
 import styles from "./page.module.css";
@@ -44,9 +44,20 @@ export default async function AnalyzePage({
 
     return (
       <div className={styles.container}>
-        {/* Header with Player Info and Refresh Button */}
+        {/* Header with Player Banner, Info and Refresh Button */}
         <div className={styles.header}>
           <div className={styles.playerInfo}>
+            {/* Player Small Image (Avatar) */}
+            {account.card && account.card.small && (
+              <div className={styles.bannerContainer}>
+                <img 
+                  src={account.card.small} 
+                  alt="Player Avatar" 
+                  className={styles.bannerImage}
+                />
+              </div>
+            )}
+            
             <span className={styles.playerName}>{account.name}</span>
             <span className={styles.playerTag}>#{account.tag}</span>
             <span style={{ marginLeft: "1rem", color: "var(--text-secondary)", fontSize: "0.9rem" }}>
@@ -70,14 +81,25 @@ export default async function AnalyzePage({
           </h2>
           {/* We format the LLM results cleanly. 
               Because we explicitly asked Gemini for bullet points formatted cleanly, we can just render the text. */}
-          <div className={styles.aiResponse}>
+          {/* AI Feedback Formatted */}
+          <ul className={styles.aiList}>
             {aiFeedback.split("\n").map((line, idx) => {
-              if (line.trim().startsWith("-") || line.trim().startsWith("*")) {
-                return <li key={idx}>{line.replace(/^[-*]\s*/, "")}</li>;
+              const trimmed = line.trim();
+              if (!trimmed) return null; // Drop empty spacer lines entirely
+              
+              const isBullet = /^([-*•]|\d+\.)\s+/.test(trimmed);
+              const cleanText = trimmed.replace(/\*\*/g, "").replace(/^([-*•]|\d+\.)\s+/, "");
+
+              if (isBullet) {
+                return (
+                  <li key={idx} className={styles.aiListItem}>
+                    {cleanText}
+                  </li>
+                );
               }
-              return <p key={idx}>{line}</p>;
+              return <p key={idx} className={styles.aiParagraph}>{cleanText}</p>;
             })}
-          </div>
+          </ul>
         </div>
 
         {/* Raw Quantifiable Stats Display */}
@@ -98,8 +120,18 @@ export default async function AnalyzePage({
                 <div key={idx} className={styles.matchPill}>
                   <div className={styles.matchHeader}>
                     <span>{m.metadata.map}</span>
-                    <span>{myPlayer.character}</span>
+                    <span style={{ fontWeight: 600 }}>{myPlayer.character}</span>
                   </div>
+                  
+                  {/* Agent Image rendering */}
+                  {myPlayer.assets?.agent?.bust && (
+                    <img 
+                      src={myPlayer.assets.agent.bust} 
+                      alt={myPlayer.character} 
+                      className={styles.agentImage}
+                    />
+                  )}
+
                   <div className={styles.matchKDA}>
                     {myPlayer.stats.kills} / {myPlayer.stats.deaths} / {myPlayer.stats.assists}
                   </div>

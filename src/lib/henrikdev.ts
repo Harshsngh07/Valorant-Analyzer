@@ -11,6 +11,11 @@ export interface AccountData {
   account_level: number;
   name: string;
   tag: string;
+  card?: {
+    small: string;
+    large: string;
+    wide: string;
+  };
 }
 
 export interface MatchData {
@@ -24,6 +29,9 @@ export interface MatchData {
       tag: string;
       team: string;
       character: string;
+      assets?: {
+        agent?: { small: string; full: string; bust: string };
+      };
       stats: {
         score: number;
         kills: number;
@@ -87,7 +95,9 @@ export async function getLastMatches(region: string, name: string, tag: string):
   const data = await res.json();
   
   // Filter for only Competitive matches, then take the last 5
-  const competitiveMatches = data.data.filter((match: MatchData) => match.metadata.mode === "Competitive");
+  const competitiveMatches = data.data.filter((match: MatchData) => 
+    match.metadata.mode.toLowerCase() === "competitive"
+  );
   
   return competitiveMatches.slice(0, 5);
 }
