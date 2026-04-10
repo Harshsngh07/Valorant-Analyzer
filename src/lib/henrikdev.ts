@@ -18,6 +18,20 @@ export interface AccountData {
   };
 }
 
+export interface MmrData {
+  currenttier: number;
+  currenttierpatched: string;
+  images: {
+    small: string;
+    large: string;
+    triangle_down: string;
+    triangle_up: string;
+  };
+  ranking_in_tier: number;
+  mmr_change_to_last_game: number;
+  elo: number;
+}
+
 export interface MatchData {
   metadata: {
     map: string;
@@ -37,8 +51,23 @@ export interface MatchData {
         kills: number;
         deaths: number;
         assists: number;
+        headshots: number;
+        bodyshots: number;
+        legshots: number;
       };
     }>;
+  };
+  teams?: {
+    red: {
+      has_won: boolean;
+      rounds_won: number;
+      rounds_lost: number;
+    };
+    blue: {
+      has_won: boolean;
+      rounds_won: number;
+      rounds_lost: number;
+    };
   };
 }
 
@@ -71,7 +100,32 @@ export async function getAccountInfo(name: string, tag: string): Promise<Account
 }
 
 /**
- * 2. Fetch The Last 5 Matches
+ * 2. Fetch MMR Info (Rank, RR, Change)
+ */
+export async function getMMRInfo(region: string, name: string, tag: string): Promise<MmrData | null> {
+  const url = `https://api.henrikdev.xyz/valorant/v1/mmr/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`;
+  
+  const res = await fetch(url, {
+    headers: {
+      "Authorization": process.env.HENRIK_API_KEY || "",
+    },
+    next: {
+      tags: [`mmr-${name}-${tag}`],
+      revalidate: 3600, // 1 hour cache
+    }
+  });
+
+  if (!res.ok) {
+    // Some accounts might not have MMR data if they haven't played competitive
+    return null;
+  }
+
+  const data = await res.json();
+  return data.data;
+}
+
+/**
+ * 3. Fetch The Last 5 Matches
  */
 export async function getLastMatches(region: string, name: string, tag: string): Promise<MatchData[]> {
   // We fetch a larger size (15) so we have enough matches to filter out the Competitive ones locally,

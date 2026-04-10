@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 // We import Inter font from Google Fonts automatically via Next.js!
 // This satisfies the modern typography requirement perfectly.
@@ -28,6 +29,7 @@ export default function RootLayout({
         <main className="container">
           {children}
         </main>
+        <Analytics />
       </body>
     </html>
   );

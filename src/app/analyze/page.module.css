@@ -116,6 +116,27 @@
   gap: 0.5rem;
 }
 
+.matchPillWin {
+  border-color: #10b981;
+}
+
+.matchPillLoss {
+  border-color: #ef4444;
+}
+
+.matchPillDraw {
+  border-color: #eab308;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .matchHeader {
   display: flex;
   justify-content: space-between;
@@ -151,4 +172,94 @@
   border: 1px solid var(--border-color);
   align-self: center;
   margin: 0.5rem 0;
+}
+
+/* NEW PREMIUM FEATURE STYLES */
+
+.dynamicBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  filter: blur(80px) brightness(0.25);
+  pointer-events: none;
+}
+
+.rankWidget {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  margin-top: 1rem;
+}
+
+.rankImage {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+.rankDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.rankName {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+.rankRR {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.rrChangePos {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.rrChangeNeg {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.mvpBadge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.5);
+  transform: rotate(5deg);
+}
+
+.teamMvpBadge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #9ca3af, #4b5563);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(75, 85, 99, 0.5);
+  transform: rotate(5deg);
+}
+
+.pillRelative {
+  position: relative;
 }
