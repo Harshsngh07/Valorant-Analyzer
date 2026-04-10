@@ -51,7 +51,7 @@ export default async function AnalyzePage({
     // Determine most played agent for background
     const agentCounts: Record<string, { count: number; image: string }> = {};
     matches.forEach(m => {
-      const myP = m.players.all_players.find(p => p.name.toLowerCase() === name.toLowerCase() && p.tag.toLowerCase() === tag.toLowerCase());
+      const myP = m.players.all_players.find(p => p.name?.toLowerCase() === name.toLowerCase() && p.tag?.toLowerCase() === tag.toLowerCase());
       if (myP && myP.assets?.agent?.full) {
         if (!agentCounts[myP.character]) {
           agentCounts[myP.character] = { count: 0, image: myP.assets.agent.full };
@@ -163,7 +163,7 @@ export default async function AnalyzePage({
             <div className={styles.matchesGrid}>
               {matches.map((m, idx) => {
                 const myPlayer = m.players.all_players.find(
-                  (p) => p.name.toLowerCase() === name.toLowerCase() && p.tag.toLowerCase() === tag.toLowerCase()
+                  (p) => p.name?.toLowerCase() === name.toLowerCase() && p.tag?.toLowerCase() === tag.toLowerCase()
                 );
                 
                 if (!myPlayer) return null;

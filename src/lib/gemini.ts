@@ -11,7 +11,7 @@ export async function analyzePlaystyle(playerName: string, playerTag: string, ma
 
   const summarizedMatches = matches.map((match, idx) => {
     const myPlayer = match.players.all_players.find(
-      (p) => p.name.toLowerCase() === playerName.toLowerCase() && p.tag.toLowerCase() === playerTag.toLowerCase()
+      (p) => p.name?.toLowerCase() === playerName.toLowerCase() && p.tag?.toLowerCase() === playerTag.toLowerCase()
     );
 
     if (!myPlayer) return null;

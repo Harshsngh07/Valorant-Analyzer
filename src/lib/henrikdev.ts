@@ -148,9 +148,8 @@ export async function getLastMatches(region: string, name: string, tag: string):
 
   const data = await res.json();
   
-  // Filter for only Competitive matches, then take the last 5
   const competitiveMatches = data.data.filter((match: MatchData) => 
-    match.metadata.mode.toLowerCase() === "competitive"
+    match.metadata?.mode?.toLowerCase() === "competitive"
   );
   
   return competitiveMatches.slice(0, 5);

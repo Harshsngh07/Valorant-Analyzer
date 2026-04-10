@@ -8,7 +8,7 @@ export default function AnalyticsDashboard({ matches, playerName, playerTag }: {
   // Reverse to ensure chronological order (left = oldest)
   const chartData = [...matches].reverse().map((m, i) => {
     const myPlayer = m.players.all_players.find(
-      (p) => p.name.toLowerCase() === playerName.toLowerCase() && p.tag.toLowerCase() === playerTag.toLowerCase()
+      (p) => p.name?.toLowerCase() === playerName.toLowerCase() && p.tag?.toLowerCase() === playerTag.toLowerCase()
     );
     if (!myPlayer) return null;
 
