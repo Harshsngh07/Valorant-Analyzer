@@ -13,7 +13,7 @@ export default function Home() {
   // Form submission handler
   const handleAnalyze = (e: React.FormEvent) => {
     e.preventDefault(); // Prevents the browser from refreshing the page on enter
-    
+
     // Split the input into name and tag (e.g. "Harshu#1234")
     const parts = riotId.split("#");
     if (parts.length !== 2) {
@@ -22,9 +22,11 @@ export default function Home() {
     }
 
     const [name, tag] = parts;
-    
+
     // Navigate to the analysis page, passing the parameters via the URL!
-    router.push(`/analyze?name=${encodeURIComponent(name)}&tag=${encodeURIComponent(tag)}`);
+    router.push(
+      `/analyze?name=${encodeURIComponent(name)}&tag=${encodeURIComponent(tag)}`,
+    );
   };
 
   return (
@@ -34,13 +36,18 @@ export default function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <h1 className={styles.title}>
           Elevate Your <span className={styles.highlight}>Playstyle</span>
         </h1>
         <p className={styles.subtitle}>
-          AI-powered analysis of your recent matches. Find out why you win. Discover how to improve.
+          AI-powered analysis of your recent matches. Find out why you win.
+          Discover how to improve.
         </p>
 
         <form onSubmit={handleAnalyze} className={styles.formBox}>
@@ -49,7 +56,7 @@ export default function Home() {
             <input
               id="riotId"
               type="text"
-              placeholder="e.g. TenZ#NA1"
+              placeholder="e.g. FNC Flash#FTW"
               value={riotId}
               onChange={(e) => setRiotId(e.target.value)}
               className={styles.inputField}
