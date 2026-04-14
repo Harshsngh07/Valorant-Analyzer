@@ -222,6 +222,12 @@
   color: var(--text-secondary);
 }
 
+.hoverHint {
+  cursor: help;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
 .rrChangePos {
   color: #10b981;
   font-weight: 600;
