@@ -45,8 +45,8 @@ export async function analyzePlaystyle(playerName: string, playerTag: string, ma
     });
     
     return response.text;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Gemini API Error:", err);
-    return `Failure from AI: ${err.message}`;
+    return `Failure from AI: ${err instanceof Error ? err.message : "Unknown error"}`;
   }
 }

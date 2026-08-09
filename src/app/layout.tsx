@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import styles from "./layout.module.css";
+import { Crosshair, Swords } from "lucide-react";
+import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react";
 
-// We import Inter font from Google Fonts automatically via Next.js!
-// This satisfies the modern typography requirement perfectly.
 const inter = Inter({ subsets: ["latin"] });
 
-// Next.js App Router uses standard exports for SEO metadata!
-// This will render perfect Title and Meta descriptions.
 export const metadata: Metadata = {
-  title: "ValoAnalyzer - AI Powered Playstyle Insights",
-  description: "Analyze your last 5 Valorant matches with AI to find your strengths and weaknesses.",
+  title: "ValoCoach - AI Valorant Coaching",
+  description:
+    "Get graded on your last 5 Valorant matches, see performance trends and receive a coaching plan from an AI that thinks like a Radiant coach.",
 };
 
-/**
- * RootLayout defines the base HTML wrapper for every page.
- * We include the Inter font className here so it applies app-wide!
- */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,9 +22,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="container">
-          {children}
-        </main>
+        <div className="container">
+          <header className={styles.nav}>
+            <Link href="/" className={styles.logo}>
+              <span className={styles.logoIcon}>
+                <Crosshair size={18} />
+              </span>
+              VALO
+              <span className={styles.logoAccent}>COACH</span>
+            </Link>
+            <div className={styles.navRight}>
+              <span className={styles.navTag}>
+                <Swords size={13} style={{ verticalAlign: "-2px", marginRight: "0.3rem" }} />
+                RADIANT AI COACHING
+              </span>
+              <Link href="/" className={styles.navCta}>
+                Analyze Me
+              </Link>
+            </div>
+          </header>
+          <main>{children}</main>
+        </div>
         <Analytics />
       </body>
     </html>

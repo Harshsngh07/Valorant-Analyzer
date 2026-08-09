@@ -8,9 +8,8 @@ import { redirect } from "next/navigation";
  * without exposing APIs or client-side caching complexity!
  */
 export async function hardRefresh(name: string, tag: string) {
-  // Bust the caches globally for the analyze route to bypass specific 
-  // Next.js 16 tag-typings that break during strict Vercel builds.
-  // @ts-ignore
+  // Bust the caches globally for the analyze route so the next
+  // request re-fetches fresh data from the HenrikDev API.
   revalidatePath('/analyze');
   
   // After clearing the cache, we redirect the user to the same page

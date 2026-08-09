@@ -36,6 +36,7 @@ export interface MatchData {
   metadata: {
     map: string;
     mode: string;
+    started_at?: string;
   };
   players: {
     all_players: Array<{
